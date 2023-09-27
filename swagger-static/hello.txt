@@ -1,0 +1,1 @@
+hello from swagger-static/hello.txt
