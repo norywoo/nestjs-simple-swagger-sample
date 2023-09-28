@@ -1,6 +1,5 @@
-import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
-import { exec } from "child_process";
-import { promisify } from 'util';
+import { Injectable } from '@nestjs/common';
+const DEFAULT_APP_VERSION = '0.0';
 
 @Injectable()
 export class AppService {
@@ -9,13 +8,6 @@ export class AppService {
   }
 
   public async getVersion(): Promise<string> {
-    const cmd = 'git describe --tags --abbrev=0';
-    const shellExec = promisify(exec);
-    const { stdout, stderr }= await shellExec(cmd);
-    if (stderr) {
-      throw new HttpException(stderr, HttpStatus.INTERNAL_SERVER_ERROR);
-    }
-
-    return stdout.trim();
+    return process.env.APP_ERSION ?? DEFAULT_APP_VERSION;
   }
 }
