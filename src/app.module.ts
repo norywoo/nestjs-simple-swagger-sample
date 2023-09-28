@@ -7,9 +7,8 @@ import { join } from 'path';
 @Module({
   imports: [
     ServeStaticModule.forRoot({
-      rootPath: join(__dirname, '..', 'swagger-static'),
-      // serveRoot: process.env.NODE_ENV === 'development' ? '/' : '/swagger',
-      serveRoot: '/api',
+      rootPath: join(__dirname, '..', 'static'),
+      serveRoot: '/',
     }),
   ],
   controllers: [AppController],
