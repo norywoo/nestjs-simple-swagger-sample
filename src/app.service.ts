@@ -8,6 +8,6 @@ export class AppService {
   }
 
   public async getVersion(): Promise<string> {
-    return process.env.APP_ERSION ?? DEFAULT_APP_VERSION;
+    return process.env.APP_VERSION ?? DEFAULT_APP_VERSION;
   }
 }
