@@ -1,6 +1,7 @@
 import { Controller, Get } from '@nestjs/common';
 import { ApiOperation } from '@nestjs/swagger';
 import { AppService } from './app.service';
+//import { Item } from './item.entity';
 
 @Controller()
 export class AppController {
@@ -15,9 +16,9 @@ export class AppController {
     return this.appService.getHello();
   }
 
-  @Get('version')
+  @Get('health')
   @ApiOperation({
-    summary: 'Get version',
+    summary: 'Health check with get version',
     description: 'Get git tag as the version',
   })
   public async getVesion(): Promise<string> {
