@@ -21,11 +21,14 @@ export class ItemService {
   }
 
   public async getItemByName(name: string): Promise<Item> {
-    console.log(`NAM: ${name}`);
-    console.log(this.items);
-    const foundItem = this.items.find((item) => item.name === name);
-    console.log(foundItem);
-    return foundItem;
+    return this.items.find((item) => item.name === name);
     //return this.appRepository.findOne({ name });
+  }
+
+  public async deleteItemByName(name: string): Promise<Item> {
+    const item = this.items.find((item) => item.name === name);
+    this.items = this.items.filter((item) => item.name !== name);
+    return item;
+    //return this.appRepository.delete({ name });
   }
 }

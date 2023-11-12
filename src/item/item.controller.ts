@@ -1,14 +1,13 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
 import { ApiOperation, ApiTags, ApiBody, ApiParam } from '@nestjs/swagger';
 import { ItemService } from './item.service';
 import { Item } from './item.entity';
 
-@Controller()
+@ApiTags('Item')
+@Controller('api/v1/item')
 export class ItemController {
   constructor(private readonly itemService: ItemService) {}
-
-  @ApiTags('Item')
-  @Post('api/v1/item')
+  @Post()
   @ApiBody({ type: Item })
   @ApiOperation({
     summary: 'Create item',
@@ -19,8 +18,7 @@ export class ItemController {
     return await this.itemService.createItem(item);
   }
 
-  @ApiTags('Item')
-  @Get('api/v1/item')
+  @Get()
   @ApiOperation({
     summary: 'Get all items',
     description: 'Get all items',
@@ -29,8 +27,7 @@ export class ItemController {
     return await this.itemService.getAllItems();
   }
 
-  @ApiTags('Item')
-  @Get('api/v1/item/:name')
+  @Get(':name')
   @ApiOperation({
     summary: 'Get all items',
     description: 'Get all items',
@@ -43,5 +40,20 @@ export class ItemController {
   public async getItemByName(@Param() params): Promise<Item> {
     const name = params.name;
     return await this.itemService.getItemByName(name);
+  }
+
+  @Delete(':name')
+  @ApiOperation({
+    summary: 'Delete item',
+    description: 'Delete item',
+  })
+  @ApiParam({
+    name: 'name',
+    enum: ['apple', 'banana', 'pear', 'kiwi', 'orange', 'grape', 'pineapple'],
+    description: 'Item name',
+  })
+  public async deleteItemByName(@Param() params): Promise<Item> {
+    const name = params.name;
+    return await this.itemService.deleteItemByName(name);
   }
 }
