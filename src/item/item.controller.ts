@@ -1,4 +1,12 @@
-import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Patch,
+  Post,
+} from '@nestjs/common';
 import { ApiOperation, ApiTags, ApiBody, ApiParam } from '@nestjs/swagger';
 import { ItemService } from './item.service';
 import { Item } from './item.entity';
@@ -40,6 +48,25 @@ export class ItemController {
   public async getItemByName(@Param() params): Promise<Item> {
     const name = params.name;
     return await this.itemService.getItemByName(name);
+  }
+
+  @Patch(':name')
+  @ApiBody({ type: Item })
+  @ApiOperation({
+    summary: 'Update item',
+    description: 'Update item',
+  })
+  @ApiParam({
+    name: 'name',
+    enum: ['apple', 'banana', 'pear', 'kiwi', 'orange', 'grape', 'pineapple'],
+    description: 'Item name',
+  })
+  public async updateItemByName(
+    @Param() params,
+    @Body() item: Item,
+  ): Promise<Item> {
+    const name = params.name;
+    return await this.itemService.updateItemByName(name, item);
   }
 
   @Delete(':name')
